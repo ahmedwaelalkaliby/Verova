@@ -11,7 +11,8 @@ export interface Product {
 }
 
 export async function getProducts(): Promise<Product[]> {
-  const res = await fetch("https://ecommerce.routemisr.com/api/v1/products", {
+  const apiUrl = process.env.NEXT_PUBLIC_PRODUCTS_API || "https://ecommerce.routemisr.com/api/v1/products";
+  const res = await fetch(apiUrl, {
       cache: "no-store", 
       next: { revalidate: 60 }, 
   });
