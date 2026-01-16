@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import { getProductDetails } from "@/lib/apis/productDetailsApi";
 import ProductDetails from "./ProductDetails";
 
+export const dynamic = 'force-dynamic';
+
 // ✅ SEO metadata
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

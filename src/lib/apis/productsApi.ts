@@ -12,15 +12,30 @@ export interface Product {
 
 export async function getProducts(): Promise<Product[]> {
   const apiUrl = process.env.NEXT_PUBLIC_PRODUCTS_API || "https://ecommerce.routemisr.com/api/v1/products";
-  const res = await fetch(apiUrl, {
+  
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
+  try {
+    const res = await fetch(apiUrl, {
       cache: "no-store", 
-      next: { revalidate: 60 }, 
-  });
+      next: { revalidate: 60 },
+      signal: controller.signal,
+    });
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch products");
+    clearTimeout(timeoutId);
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch products");
+    }
+
+    const data = await res.json();
+    return data.data || [];
+  } catch (error: any) {
+    clearTimeout(timeoutId);
+    if (error.name === 'AbortError') {
+      throw new Error("Request timeout: API took too long to respond");
+    }
+    throw error;
   }
-
-  const data = await res.json();
-  return data.data || [];
 }
