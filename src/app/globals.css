@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@font-face {
+  font-family: 'ClashDisplay-Bold';
+  src: url('../../public/fonts/ClashDisplay-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+}
+.body {
+  font-family: 'ClashDisplay-Regular';
+}
+
+/* Abdalla */
+.container {
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+
+
+.hero {
+  background-image: url("../../public/images/hero.png");
+}
+.gender .men {
+  background-image: url("../../public/images/gender/men.png");
+}
+.gender .women {
+  background-image: url("../../public/images/gender/women.png");
+}
+.last-home-page-section {
+  background-image: url("../../public/images/lastHomePageImage.webp");
+}
