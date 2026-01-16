@@ -3,8 +3,9 @@ import { getProductDetails } from "@/lib/apis/productDetailsApi";
 import ProductDetails from "./ProductDetails";
 
 // ✅ SEO metadata
-export async function generateMetadata({ params }: { params: { id: string } }) {
-  const product = await getProductDetails(params.id);
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const product = await getProductDetails(id);
 
   if (!product) {
     return { title: "Product Not Found" };
@@ -36,8 +37,9 @@ export interface Product {
 
 
 // ✅ Page Component
-export default async function ProductPage({ params }: { params: { id: string } }) {
-    const product = await getProductDetails(params.id);
+export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
+    const product = await getProductDetails(id);
     
 
   if (!product) return notFound();
